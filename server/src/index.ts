@@ -5,6 +5,10 @@ import { createConnection } from "typeorm";
 import session from "express-session";
 import cors from 'cors';
 import { MyContext } from './types';
+import { User } from './models/user';
+import swaggerUi from "swagger-ui-express";
+import UserRouter from './routes/user.router';
+import swaggerDocument from '../public/swagger.json';
 
 const main = async () => {
 
@@ -15,12 +19,16 @@ const main = async () => {
     password: "password",
     logging: true,
     synchronize: true,
-    entities: [],
+    entities: [
+      User,
+    ],
   });
+  
 
   await conn.runMigrations()
 
   const app = express()
+  app.use(express.json());
 
   const RedisStore = connectRedis(session);
   const redis = new Redis();
@@ -49,11 +57,23 @@ const main = async () => {
     resave: false,
   });
 
+  app.use(
+    "/docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument)
+  ); 
+
   app.use(sessionMiddleWare);
 
   app.get('/', (context: MyContext) => {
     context.res.send("hello world")
   })
+
+  const router = express.Router();
+
+  router.use("/users", UserRouter);
+
+  app.use('/', router)
   
   const PORT = 4001
   app.listen(PORT, () => console.log(`server running on port: ${PORT}`))

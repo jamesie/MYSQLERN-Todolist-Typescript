@@ -9,6 +9,9 @@ import { User } from './models/user';
 import swaggerUi from "swagger-ui-express";
 import UserRouter from './routes/user.router';
 import swaggerDocument from '../public/swagger.json';
+import { BaseEntity } from './models/base';
+import { Task } from './models/task';
+import { TodoList } from './models/todolist';
 
 const main = async () => {
 
@@ -21,6 +24,9 @@ const main = async () => {
     synchronize: true,
     entities: [
       User,
+      BaseEntity,
+      Task,
+      TodoList
     ],
   });
   

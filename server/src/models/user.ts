@@ -1,10 +1,17 @@
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn} from "typeorm";
+import { Entity, Column, OneToMany} from "typeorm";
+import { BaseEntity } from "./base";
+import { TodoList } from './todolist';
 
 @Entity()
-export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
+export class User extends BaseEntity { 
+  
+  @Column({ type: String, unique: true })
+  username!: string;
 
   @Column({ type: String })
-  nickname!: string;
+  password!: string;
+
+  @OneToMany(() => TodoList , (todolist) => todolist.creator)
+  todoLists!: TodoList[];
+
 }

@@ -13,6 +13,8 @@ import { BaseEntity } from './models/base';
 import { Task } from './models/task';
 import { TodoList } from './models/todolist';
 
+export const COOKIE_NAME = "todolist"
+
 const main = async () => {
 
   const conn = await createConnection({
@@ -47,7 +49,7 @@ const main = async () => {
   app.use(cors(corsOptions));
 
   const sessionMiddleWare = session({
-    name: "connect4c",
+    name: COOKIE_NAME,
     store: new RedisStore({
       client: redis,
       disableTouch: true,

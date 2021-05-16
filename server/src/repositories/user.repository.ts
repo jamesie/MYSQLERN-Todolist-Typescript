@@ -24,6 +24,22 @@ export const login = async (payload: IUserPayload): Promise<User | string> => {
     .getOne();
   if (!user) return "Incorrect Username or Password" // incorrect username
   if(!(await argon2.verify(user.password, payload.password))) return "Incorrect Username or Password" // incorrect password
-  console.log(user)
   return user;
 };
+
+export const deleteAccount = async(id: number) => {
+  await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(User)
+    .where("id = :id", { id })
+    .execute()
+}
+
+export const me = async(id: number): Promise<User | undefined> => {
+  return getConnection()
+    .getRepository(User)
+    .createQueryBuilder("user")
+    .where("user.id = :id", { id })
+    .getOne();
+}

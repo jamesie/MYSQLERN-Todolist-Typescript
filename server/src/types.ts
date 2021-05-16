@@ -12,3 +12,7 @@ export type MyContext = {
   req: Request & {session : session.SessionData}
   res: Response;
 }
+
+export type myReq = Request & {session : session.SessionData}
+
+export type myRes = Response;

@@ -10,7 +10,7 @@ export const createUser = async (payload: IUserPayload): Promise<User | string> 
   if (!payload.username) return "no username";
   user.password = await argon2.hash(payload.password)
   user.username = payload.username;
-  const savedUser = userRepository.save(user).catch((err) => {
+  const savedUser = await userRepository.save(user).catch((err) => {
     return err as string
   })
   return savedUser;
@@ -37,7 +37,7 @@ export const deleteAccount = async(id: number) => {
 }
 
 export const me = async(id: number): Promise<User | undefined> => {
-  return getConnection()
+  return await getConnection()
     .getRepository(User)
     .createQueryBuilder("user")
     .where("user.id = :id", { id })

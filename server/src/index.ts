@@ -1,6 +1,5 @@
 import express from 'express';
 import connectRedis from "connect-redis";
-import Redis from 'ioredis';
 import { createConnection } from "typeorm";
 import session from "express-session";
 import cors from 'cors';
@@ -12,6 +11,8 @@ import swaggerDocument from '../public/swagger.json';
 import { BaseEntity } from './models/base';
 import { Task } from './models/task';
 import { TodoList } from './models/todolist';
+import TodoListRouter from './routes/todolist.router';
+import redis from 'redis'
 
 export const COOKIE_NAME = "todolist"
 
@@ -39,7 +40,7 @@ const main = async () => {
   app.use(express.json());
 
   const RedisStore = connectRedis(session);
-  const redis = new Redis();
+  const redisClient = redis.createClient()
 
   const corsOptions = {
     origin: "http://localhost:3000",
@@ -51,7 +52,7 @@ const main = async () => {
   const sessionMiddleWare = session({
     name: COOKIE_NAME,
     store: new RedisStore({
-      client: redis,
+      client: redisClient,
       disableTouch: true,
     }),
     cookie: {
@@ -85,7 +86,6 @@ const main = async () => {
   
   const PORT = 4001
   app.listen(PORT, () => console.log(`server running on port: ${PORT}`))
-
 }
 
 main().catch((err) => {

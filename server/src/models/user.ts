@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany} from "typeorm";
+import { Entity, Column, OneToMany, JoinColumn} from "typeorm";
 import { BaseEntity } from "./base";
 import { TodoList } from './todolist';
 
@@ -11,6 +11,7 @@ export class User extends BaseEntity {
   @Column({ type: String })
   password!: string;
 
+  @JoinColumn()
   @OneToMany(() => TodoList , (todolist) => todolist.creator)
   todoLists!: TodoList[];
 

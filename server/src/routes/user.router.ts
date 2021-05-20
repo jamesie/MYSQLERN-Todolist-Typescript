@@ -1,35 +1,32 @@
 import express from "express";
-import { COOKIE_NAME } from "../index";
 import UserController from "../controllers/user.controller";
-import { myRes, myReq } from '../types';
+import { cookieLogoutorDeleteHandle } from '../utils/destoryCookie';
 
-const UserRouter = express.Router();
+const UserRouter = express.Router()
+let statusNum = 200
 
 UserRouter.post("/register", async (req, res) => {
   const controller = new UserController();
-  const response = await controller.register(req.body);
-  if (!response) return res.status(400).send("incorrect inputs")
-  if (typeof response === "string") return res.send(response)
-  req.session.userId = response.id
-  return res.send(response);
+  const response = await controller.register(req).catch((err: Error) => {
+    statusNum = 400
+    return err.message
+  });
+  return res.status(statusNum).send(response);
 });
 
 UserRouter.post("/login", async (req, res) => {
   const controller = new UserController();
-  const response = await controller.login(req.body);
-  if (!response) return res.status(400).send("incorrect inputs")
-  if (typeof response === "string") return res.send(response)
-  req.session.userId = response.id
-  console.log(req.session)
-  return res.send(true);
+  const response = await controller.login(req).catch((err: Error) => {
+    statusNum = 400
+    return err.message
+  });;
+  return res.status(statusNum).send(response);
 });
 
 UserRouter.post('/delete', async (req, res) => {
   const controller = new UserController();
   await controller.deleteAccount(req)
-  console.log("before" , req.session)
   const cookieStatus = await cookieLogoutorDeleteHandle(req, res)
-  console.log("after" , req.session)
   res.send(cookieStatus)
 })
 
@@ -38,22 +35,10 @@ UserRouter.post('/logout', async (req, res) => {
   res.send(cookieStatus)
 })
 
-UserRouter.post("/me", async (req, res) => {
+UserRouter.get("/me", async (req, res) => {
   const controller = new UserController();
   const response = await controller.me(req)
   res.send(response)
 })
-
-const cookieLogoutorDeleteHandle = (req: myReq, res: myRes) => {
-  return new Promise((resolve) => req.session.destroy((err: any) => {
-    res.clearCookie(COOKIE_NAME);
-    if (err) {
-      console.log(err);
-      resolve(false);
-      return;
-    }
-    resolve(true);
-  }));
-}
 
 export default UserRouter;

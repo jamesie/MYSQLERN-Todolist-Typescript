@@ -13,6 +13,7 @@ import { Task } from './models/task';
 import { TodoList } from './models/todolist';
 import TodoListRouter from './routes/todolist.router';
 import redis from 'redis'
+import TaskRouter from './routes/task.router';
 
 export const COOKIE_NAME = "todolist"
 
@@ -82,6 +83,7 @@ const main = async () => {
 
   router.use("/users", UserRouter);
   router.use("/todolist", TodoListRouter)
+  router.use("/task", TaskRouter)
 
   app.use('/', router)
   

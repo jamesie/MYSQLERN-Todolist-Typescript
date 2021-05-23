@@ -16,10 +16,13 @@ export default class TodoListController extends Controller {
   public async createToDoList(@Request() req: myReq, @Body() body: ITodoListPayload): Promise<TodoList> {
     return createTodoList(req, body)
   }
+  @Post("/delete")
   public async deleteTodoList(@Request() req: myReq, @Body() body: ITodoListPayload): Promise<boolean> {
     return deleteTodoList(req, body)
 
-  }public async renameTodoList(@Request() req: myReq, @Body() body: ITodoListPayload): Promise<boolean> {
+  }
+  @Post("/rename")
+  public async renameTodoList(@Request() req: myReq, @Body() body: ITodoListPayload): Promise<boolean> {
     return renameTodoList(req, body)
   }
 

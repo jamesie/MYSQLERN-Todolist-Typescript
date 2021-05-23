@@ -10,6 +10,10 @@ export class Task extends BaseEntity {
 
   @Column({default: false})
   status!: boolean;
+  
+
+  @Column({nullable: true})
+  toBeCompletedBy!: Date
 
   @ManyToOne(() => TodoList, (todoList) => todoList.tasks)
   belongsTo!: TodoList;

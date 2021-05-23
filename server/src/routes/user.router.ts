@@ -3,9 +3,10 @@ import UserController from "../controllers/user.controller";
 import { cookieLogoutorDeleteHandle } from '../utils/destoryCookie';
 
 const UserRouter = express.Router()
-let statusNum = 200
+
 
 UserRouter.post("/register", async (req, res) => {
+  let statusNum = 200
   const controller = new UserController();
   const response = await controller.register(req).catch((err: Error) => {
     statusNum = 400
@@ -15,6 +16,7 @@ UserRouter.post("/register", async (req, res) => {
 });
 
 UserRouter.post("/login", async (req, res) => {
+  let statusNum = 200
   const controller = new UserController();
   const response = await controller.login(req).catch((err: Error) => {
     statusNum = 400

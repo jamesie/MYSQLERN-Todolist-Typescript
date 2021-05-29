@@ -1,6 +1,7 @@
-import { Entity, Column, ManyToOne} from "typeorm";
+import { Entity, Column, ManyToOne } from "typeorm";
 import { TodoList } from './todolist';
 import { BaseEntity } from "./base";
+import { User } from "./user";
 
 @Entity()
 export class Task extends BaseEntity {
@@ -10,11 +11,19 @@ export class Task extends BaseEntity {
 
   @Column({default: false})
   status!: boolean;
-  
 
   @Column({nullable: true})
   toBeCompletedBy!: Date
 
   @ManyToOne(() => TodoList, (todoList) => todoList.tasks)
-  belongsTo!: TodoList;
+  todoList!: TodoList;
+
+  @Column()
+  todoListId!: number;
+
+  @ManyToOne(() => User, (user) => user.todoLists)
+  creator!: User;
+
+  @Column()
+  creatorId!: number;
 }

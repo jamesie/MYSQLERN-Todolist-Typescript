@@ -1,6 +1,7 @@
 import { Entity, Column, OneToMany, JoinColumn} from "typeorm";
 import { BaseEntity } from "./base";
 import { TodoList } from './todolist';
+import { Task } from './task';
 
 @Entity()
 export class User extends BaseEntity { 
@@ -14,5 +15,9 @@ export class User extends BaseEntity {
   @JoinColumn()
   @OneToMany(() => TodoList , (todolist) => todolist.creator)
   todoLists!: TodoList[];
+
+  @JoinColumn()
+  @OneToMany(() => Task , (task) => task.creator)
+  tasks!: Task[];
 
 }

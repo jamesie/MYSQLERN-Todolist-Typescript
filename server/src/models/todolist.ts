@@ -11,6 +11,10 @@ export class TodoList extends BaseEntity {
   @ManyToOne(() => User, (user) => user.todoLists)
   creator!: User;
 
-  @OneToMany(() => Task, (task) => task.belongsTo)
+  @Column()
+  creatorId!: number;
+
+  @OneToMany(() => Task, (task) => task.todoList)
   tasks!: Task[];
+
 }

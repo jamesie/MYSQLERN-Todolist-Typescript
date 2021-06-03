@@ -1,6 +1,6 @@
 import { myReq } from "../types";
 import { Route, Tags, Controller, Post, Request, Body, Get } from "tsoa";
-import { createTask, deleteTask, editTask, fetchIncompletedTasks } from '../repositories/task.repository';
+import { createTask, deleteTask, editTask, fetchIncompletedTasks, fetchOverdueTasks } from '../repositories/task.repository';
 import { Task } from "../models/task";
 import { TodoList } from "../models/todolist";
 
@@ -10,6 +10,7 @@ export interface ITaskPayload {
   toBeCompletedBy: Date,
   status: boolean,
   todoListId: number
+  currentDate: Date,
 }
 
 @Route("task")
@@ -34,4 +35,10 @@ export default class TaskController extends Controller {
   public async fetchIncompletedTasks(@Request() req: myReq): Promise<TodoList[]> {
     return fetchIncompletedTasks(req);
   }
+
+  @Get("/fetchoverdue")
+  public async fetchOverdueTasks(@Request() req: myReq, @Body() body: ITaskPayload): Promise<TodoList[]> {
+    return fetchOverdueTasks(req, body);
+  }
+
 }

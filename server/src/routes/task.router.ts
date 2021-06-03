@@ -44,4 +44,14 @@ TaskRouter.get("/inctasks", async (req, res) => {
   res.status(statusNum).send(response)
 })
 
+TaskRouter.get("/fetchoverdue", async (req, res) => {
+  let statusNum = 200
+  const controller = new TaskController();
+  const response = await controller.fetchOverdueTasks(req, req.body).catch((err: Error) => {
+    statusNum = 400
+    return err.message
+  });;
+  res.status(statusNum).send(response)
+})
+
 export default TaskRouter;

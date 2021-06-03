@@ -69,3 +69,23 @@ export const fetchIncompletedTasks = async (req: myReq): Promise<TodoList[]> => 
 
   return result
 };
+
+export const fetchOverdueTasks = async (req: myReq, body: ITaskPayload): Promise<TodoList[]> => {
+  if (!req.session?.userId) throw new Error("Not logged in");
+  const user = await getRepository(User).findOne({ id: req.session.userId });
+  if (!user) throw new Error("Not logged in");
+  if (!body.currentDate) throw new Error("No date included in body");
+  const date = body.currentDate // must be recieved in "YYYY-DD-MM"
+  date.toString().concat("T00:00:00.000Z")
+  
+
+  const result = await getRepository(TodoList)
+    .createQueryBuilder("todolist")
+    .leftJoinAndSelect("todolist.tasks", "tasks")
+    .where("todolist.tasks.creatorId = :creatorId", { creatorId: user.id })
+    .andWhere("todolist.tasks.toBeCompletedBy <= :date", { date })
+    .orderBy("todolist.tasks.toBeCompletedBy", "DESC")
+    .getMany()
+
+  return result
+};

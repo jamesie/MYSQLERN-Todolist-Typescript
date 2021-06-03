@@ -1,2 +1,2 @@
-# PERN-Todolist-Typescript
+# SERN-Todolist-Typescript
 far from completed but currently being built

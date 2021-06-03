@@ -49,3 +49,23 @@ export const editTask = async (req: myReq, body: ITaskPayload): Promise<Task> =>
   return task;
 };
 
+
+export const fetchIncompletedTasks = async (req: myReq): Promise<TodoList[]> => {
+  if (!req.session?.userId) throw new Error("Not logged in");
+  const user = await getRepository(User).findOne({ id: req.session.userId });
+  if (!user) throw new Error("Not logged in");
+
+  const date = new Date()
+
+  console.log("1", date.getDate())
+
+  const result = await getRepository(TodoList)
+    .createQueryBuilder("todolist")
+    .leftJoinAndSelect("todolist.tasks", "tasks")
+    .where("todolist.tasks.creatorId = :creatorId", { creatorId: user.id })
+    .andWhere("todolist.tasks.status = :status", { status: false })
+    .orderBy("todolist.tasks.toBeCompletedBy", "DESC")
+    .getMany()
+
+  return result
+};

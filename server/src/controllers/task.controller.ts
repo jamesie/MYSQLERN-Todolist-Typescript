@@ -1,7 +1,8 @@
 import { myReq } from "../types";
-import { Route, Tags, Controller, Post, Request, Body } from "tsoa";
-import { createTask, deleteTask, editTask } from '../repositories/task.repository';
+import { Route, Tags, Controller, Post, Request, Body, Get } from "tsoa";
+import { createTask, deleteTask, editTask, fetchIncompletedTasks } from '../repositories/task.repository';
 import { Task } from "../models/task";
+import { TodoList } from "../models/todolist";
 
 export interface ITaskPayload {
   id: number,
@@ -29,4 +30,8 @@ export default class TaskController extends Controller {
     return editTask(req, body)
   }
 
+  @Get("/inctasks")
+  public async fetchIncompletedTasks(@Request() req: myReq): Promise<TodoList[]> {
+    return fetchIncompletedTasks(req);
+  }
 }

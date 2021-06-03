@@ -34,4 +34,14 @@ TaskRouter.post("/edit", async (req, res) => {
   res.status(statusNum).send(response)
 })
 
+TaskRouter.get("/inctasks", async (req, res) => {
+  let statusNum = 200
+  const controller = new TaskController();
+  const response = await controller.fetchIncompletedTasks(req).catch((err: Error) => {
+    statusNum = 400
+    return err.message
+  });;
+  res.status(statusNum).send(response)
+})
+
 export default TaskRouter;

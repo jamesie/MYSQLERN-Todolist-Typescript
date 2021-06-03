@@ -1,41 +1,59 @@
-import { createTodoList, deleteTodoList, fetchUsersTodoLists, renameTodoList, fetchTodoListsTaks as fetchTodoListsTasks } from '../repositories/todolist.repository';
-import { Route, Tags, Controller, Post, Request, Body, Get} from "tsoa";
+import {
+  createTodoList,
+  deleteTodoList,
+  fetchUsersTodoLists,
+  renameTodoList,
+  fetchTodoListsTaks as fetchTodoListsTasks,
+} from "../repositories/todolist.repository";
+import { Route, Tags, Controller, Post, Request, Body, Get } from "tsoa";
 import { myReq } from "../types";
 import { TodoList } from "../models/todolist";
-import { Task } from '../models/task';
-
+import { Task } from "../models/task";
 
 export interface ITodoListPayload {
-  id: number
-  name: string
-  fetchWithTasks: boolean
+  id: number;
+  name: string;
+  fetchWithTasks: boolean;
 }
 
 @Route("todolists")
 @Tags("TodoList")
 export default class TodoListController extends Controller {
   @Post("/create")
-  public async createToDoList(@Request() req: myReq, @Body() body: ITodoListPayload): Promise<TodoList> {
-    return createTodoList(req, body)
+  public async createToDoList(
+    @Request() req: myReq,
+    @Body() body: ITodoListPayload
+  ): Promise<TodoList> {
+    return createTodoList(req, body);
   }
   @Post("/delete")
-  public async deleteTodoList(@Request() req: myReq, @Body() body: ITodoListPayload): Promise<boolean> {
-    return deleteTodoList(req, body)
-
+  public async deleteTodoList(
+    @Request() req: myReq,
+    @Body() body: ITodoListPayload
+  ): Promise<boolean> {
+    return deleteTodoList(req, body);
   }
   @Post("/rename")
-  public async renameTodoList(@Request() req: myReq, @Body() body: ITodoListPayload): Promise<boolean> {
-    return renameTodoList(req, body)
+  public async renameTodoList(
+    @Request() req: myReq,
+    @Body() body: ITodoListPayload
+  ): Promise<boolean> {
+    return renameTodoList(req, body);
   }
 
   @Get("/fetchuserstodolists")
-  public async fetchUsersTodoLists(@Request() req: myReq, @Body() body: ITodoListPayload): Promise<TodoList[]> {
-    return fetchUsersTodoLists(req, body)
+  public async fetchUsersTodoLists(
+    @Request() req: myReq,
+    @Body() body: ITodoListPayload
+  ): Promise<TodoList[]> {
+    return fetchUsersTodoLists(req, body);
   }
 
   @Get("/fetchtodoliststasks")
-  public async fetchTodoListsTasks(@Request() req: myReq, @Body() body: ITodoListPayload): Promise<Task[]> {
-    return fetchTodoListsTasks(req, body)
+  public async fetchTodoListsTasks(
+    @Request() req: myReq,
+    @Body() body: ITodoListPayload
+  ): Promise<Task[]> {
+    return fetchTodoListsTasks(req, body);
   }
-
 }

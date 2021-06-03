@@ -1,7 +1,6 @@
 import session from "express-session";
 import { Request, Response } from "express";
 
-
 declare module "express-session" {
   interface SessionData {
     userId?: number;
@@ -9,10 +8,10 @@ declare module "express-session" {
 }
 
 export type MyContext = {
-  req: Request & {session : session.SessionData}
+  req: Request & { session: session.SessionData };
   res: Response;
-}
+};
 
-export type myReq = Request & {session : session.SessionData}
+export type myReq = Request & { session: session.SessionData };
 
 export type myRes = Response;

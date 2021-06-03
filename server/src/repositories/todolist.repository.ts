@@ -5,7 +5,10 @@ import { myReq } from "../types";
 import { ITodoListPayload } from "../controllers/todolist.controller";
 import { Task } from "../models/task";
 
-export const createTodoList = async (req: myReq, body: ITodoListPayload): Promise<TodoList> => {
+export const createTodoList = async (
+  req: myReq,
+  body: ITodoListPayload
+): Promise<TodoList> => {
   const todoListRepository = getRepository(TodoList);
   const todoList = new TodoList();
   if (!body.name) throw new Error("no todolist name");
@@ -17,7 +20,10 @@ export const createTodoList = async (req: myReq, body: ITodoListPayload): Promis
   return savedTodoList;
 };
 
-export const deleteTodoList = async (req: myReq, body: ITodoListPayload): Promise<boolean> => {
+export const deleteTodoList = async (
+  req: myReq,
+  body: ITodoListPayload
+): Promise<boolean> => {
   const todoList = await getRepository(TodoList).findOne({ id: body.id });
   if (!todoList) {
     throw new Error("Todolist doesn't exist");
@@ -29,7 +35,10 @@ export const deleteTodoList = async (req: myReq, body: ITodoListPayload): Promis
   return true;
 };
 
-export const renameTodoList = async (req: myReq, body: ITodoListPayload): Promise<boolean> => {
+export const renameTodoList = async (
+  req: myReq,
+  body: ITodoListPayload
+): Promise<boolean> => {
   const todoList = await getRepository(TodoList).findOne({ id: body.id });
   if (!todoList) {
     throw new Error("Todolist doesn't exist");
@@ -50,7 +59,10 @@ export const renameTodoList = async (req: myReq, body: ITodoListPayload): Promis
   return true;
 };
 
-export const fetchUsersTodoLists = async (req: myReq, body: ITodoListPayload): Promise<TodoList[]> => {
+export const fetchUsersTodoLists = async (
+  req: myReq,
+  body: ITodoListPayload
+): Promise<TodoList[]> => {
   const userRepository = getRepository(User);
   if (!req.session?.userId) throw new Error("Not logged in");
   const user = await userRepository.findOne({ id: req.session.userId });
@@ -67,11 +79,15 @@ export const fetchUsersTodoLists = async (req: myReq, body: ITodoListPayload): P
   return await result.getMany();
 };
 
-export const fetchTodoListsTaks = async (req: myReq, body: ITodoListPayload): Promise<Task[]> => {
+export const fetchTodoListsTaks = async (
+  req: myReq,
+  body: ITodoListPayload
+): Promise<Task[]> => {
   if (!body.id) throw new Error("TodoListId not specified in JSON");
   const todoList = await getRepository(TodoList).findOne({ id: body.id });
   if (!todoList) throw new Error("TodoListId does not exist");
-  if (todoList.creatorId !== req.session.userId) throw new Error("Not your todolist");
+  if (todoList.creatorId !== req.session.userId)
+    throw new Error("Not your todolist");
 
   return await getRepository(Task)
     .createQueryBuilder("task")

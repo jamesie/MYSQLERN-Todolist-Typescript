@@ -1,7 +1,12 @@
 import { Route, Tags, Post, Controller, Request, Get } from "tsoa";
-import { createUser, deleteAccount, login, me } from '../repositories/user.repository';
+import {
+  createUser,
+  deleteAccount,
+  login,
+  me,
+} from "../repositories/user.repository";
 import { User } from "../models/user";
-import { myReq } from '../types';
+import { myReq } from "../types";
 
 export interface IUserPayload {
   username: string;
@@ -13,24 +18,23 @@ export interface IUserPayload {
 export default class UserController extends Controller {
   @Post("/register")
   public async register(@Request() req: myReq): Promise<User | Error> {
-    return createUser(req.body, req.session)
+    return createUser(req.body, req.session);
   }
 
   @Post("/login")
   public async login(@Request() req: myReq): Promise<User> {
-    return login(req.body, req.session)
+    return login(req.body, req.session);
   }
 
   @Post("/delete")
   public async deleteAccount(@Request() req: myReq): Promise<void> {
-    if (!req?.session?.userId) return
-    await deleteAccount(req.session.userId)
-    return
+    if (!req?.session?.userId) return;
+    await deleteAccount(req.session.userId);
+    return;
   }
 
   @Get("/me")
   public async me(@Request() req: myReq): Promise<User> {
-    return me(req.session.userId)
+    return me(req.session.userId);
   }
-
 }

@@ -16,5 +16,4 @@ export class TodoList extends BaseEntity {
 
   @OneToMany(() => Task, (task) => task.todoList)
   tasks!: Task[];
-
 }

@@ -1,5 +1,5 @@
 import { myReq } from "../types";
-import { Route, Tags, Controller, Post, Request, Body, Get } from "tsoa";
+import { Route, Tags, Controller, Post, Request, Body, Get, Delete, Put } from "tsoa";
 import {
   createTask,
   deleteTask,
@@ -30,7 +30,7 @@ export default class TaskController extends Controller {
     return createTask(req, body);
   }
 
-  @Post("/delete")
+  @Delete("/delete")
   public async deleteTask(
     @Request() req: myReq,
     @Body() body: ITaskPayload
@@ -38,7 +38,7 @@ export default class TaskController extends Controller {
     return deleteTask(req, body);
   }
 
-  @Post("/edit")
+  @Put("/edit")
   public async editTask(
     @Request() req: myReq,
     @Body() body: ITaskPayload

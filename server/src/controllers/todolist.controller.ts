@@ -5,7 +5,7 @@ import {
   renameTodoList,
   fetchTodoListsTaks as fetchTodoListsTasks,
 } from "../repositories/todolist.repository";
-import { Route, Tags, Controller, Post, Request, Body, Get } from "tsoa";
+import { Route, Tags, Controller, Post, Request, Body, Get, Put, Delete } from "tsoa";
 import { myReq } from "../types";
 import { TodoList } from "../models/todolist";
 import { Task } from "../models/task";
@@ -26,14 +26,14 @@ export default class TodoListController extends Controller {
   ): Promise<TodoList> {
     return createTodoList(req, body);
   }
-  @Post("/delete")
+  @Delete("/delete")
   public async deleteTodoList(
     @Request() req: myReq,
     @Body() body: ITodoListPayload
   ): Promise<boolean> {
     return deleteTodoList(req, body);
   }
-  @Post("/rename")
+  @Put("/rename")
   public async renameTodoList(
     @Request() req: myReq,
     @Body() body: ITodoListPayload

@@ -15,7 +15,7 @@ TodoListRouter.post("/create", async (req, res) => {
   res.status(statusNum).send(response);
 });
 
-TodoListRouter.post("/delete", async (req, res) => {
+TodoListRouter.delete("/delete", async (req, res) => {
   let statusNum = 200;
   const controller = new TodoListController();
   const response = await controller
@@ -27,7 +27,7 @@ TodoListRouter.post("/delete", async (req, res) => {
   res.status(statusNum).send(response);
 });
 
-TodoListRouter.post("/rename", async (req, res) => {
+TodoListRouter.put("/rename", async (req, res) => {
   let statusNum = 200;
   const controller = new TodoListController();
   const response = await controller

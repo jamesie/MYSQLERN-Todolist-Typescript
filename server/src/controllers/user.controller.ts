@@ -1,4 +1,4 @@
-import { Route, Tags, Post, Controller, Request, Get } from "tsoa";
+import { Route, Tags, Post, Controller, Request, Get, Delete } from "tsoa";
 import {
   createUser,
   deleteAccount,
@@ -26,7 +26,7 @@ export default class UserController extends Controller {
     return login(req.body, req.session);
   }
 
-  @Post("/delete")
+  @Delete("/delete")
   public async deleteAccount(@Request() req: myReq): Promise<void> {
     if (!req?.session?.userId) return;
     await deleteAccount(req.session.userId);

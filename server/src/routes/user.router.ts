@@ -24,7 +24,7 @@ UserRouter.post("/login", async (req, res) => {
   return res.status(statusNum).send(response);
 });
 
-UserRouter.post("/delete", async (req, res) => {
+UserRouter.delete("/delete", async (req, res) => {
   const controller = new UserController();
   await controller.deleteAccount(req);
   const cookieStatus = await cookieLogoutorDeleteHandle(req, res);

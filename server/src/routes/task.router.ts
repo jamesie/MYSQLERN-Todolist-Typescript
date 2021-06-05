@@ -15,7 +15,7 @@ TaskRouter.post("/create", async (req, res) => {
   res.status(statusNum).send(response);
 });
 
-TaskRouter.post("/delete", async (req, res) => {
+TaskRouter.delete("/delete", async (req, res) => {
   let statusNum = 200;
   const controller = new TaskController();
   const response = await controller
@@ -27,7 +27,7 @@ TaskRouter.post("/delete", async (req, res) => {
   res.status(statusNum).send(response);
 });
 
-TaskRouter.post("/edit", async (req, res) => {
+TaskRouter.put("/edit", async (req, res) => {
   let statusNum = 200;
   const controller = new TaskController();
   const response = await controller

@@ -12,10 +12,10 @@ export class User extends BaseEntity {
   password!: string;
 
   @JoinColumn()
-  @OneToMany(() => TodoList, (todolist) => todolist.creator)
+  @OneToMany(() => TodoList, (todolist) => todolist.creator, { onDelete: 'CASCADE' })
   todoLists!: TodoList[];
 
   @JoinColumn()
-  @OneToMany(() => Task, (task) => task.creator)
+  @OneToMany(() => Task, (task) => task.creator, { onDelete: 'CASCADE' })
   tasks!: Task[];
 }

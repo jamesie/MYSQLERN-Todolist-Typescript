@@ -5,7 +5,7 @@ import {
   renameTodoList,
   fetchTodoListsTaks as fetchTodoListsTasks,
 } from "../repositories/todolist.repository";
-import { Route, Tags, Controller, Post, Request, Body, Get, Put, Delete } from "tsoa";
+import { Route, Tags, Controller, Post, Request, Body, Put, Delete } from "tsoa";
 import { myReq } from "../types";
 import { TodoList } from "../models/todolist";
 import { Task } from "../models/task";

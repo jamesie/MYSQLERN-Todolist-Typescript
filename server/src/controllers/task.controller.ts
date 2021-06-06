@@ -1,5 +1,5 @@
 import { myReq } from "../types";
-import { Route, Tags, Controller, Post, Request, Body, Get, Delete, Put } from "tsoa";
+import { Route, Tags, Controller, Post, Request, Body, Delete, Put } from "tsoa";
 import {
   createTask,
   deleteTask,

@@ -39,7 +39,7 @@ TaskRouter.put("/edit", async (req, res) => {
   res.status(statusNum).send(response);
 });
 
-TaskRouter.get("/inctasks", async (req, res) => {
+TaskRouter.post("/inctasks", async (req, res) => {
   let statusNum = 200;
   const controller = new TaskController();
   const response = await controller
@@ -51,7 +51,7 @@ TaskRouter.get("/inctasks", async (req, res) => {
   res.status(statusNum).send(response);
 });
 
-TaskRouter.get("/fetchoverdue", async (req, res) => {
+TaskRouter.post("/fetchoverdue", async (req, res) => {
   let statusNum = 200;
   const controller = new TaskController();
   const response = await controller

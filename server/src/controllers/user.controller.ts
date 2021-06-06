@@ -17,7 +17,7 @@ export interface IUserPayload {
 @Tags("User")
 export default class UserController extends Controller {
   @Post("/register")
-  public async register(@Request() req: myReq): Promise<User | Error> {
+  public async register(@Request() req: myReq): Promise<User> {
     return createUser(req.body, req.session);
   }
 

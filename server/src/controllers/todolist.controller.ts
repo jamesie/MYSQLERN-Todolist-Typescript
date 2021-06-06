@@ -41,7 +41,7 @@ export default class TodoListController extends Controller {
     return renameTodoList(req, body);
   }
 
-  @Get("/fetchuserstodolists")
+  @Post("/fetchuserstodolists")
   public async fetchUsersTodoLists(
     @Request() req: myReq,
     @Body() body: ITodoListPayload
@@ -49,7 +49,7 @@ export default class TodoListController extends Controller {
     return fetchUsersTodoLists(req, body);
   }
 
-  @Get("/fetchtodoliststasks")
+  @Post("/fetchtodoliststasks")
   public async fetchTodoListsTasks(
     @Request() req: myReq,
     @Body() body: ITodoListPayload

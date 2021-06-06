@@ -39,7 +39,7 @@ TodoListRouter.put("/rename", async (req, res) => {
   res.status(statusNum).send(response);
 });
 
-TodoListRouter.get("/fetchuserstodolists", async (req, res) => {
+TodoListRouter.post("/fetchuserstodolists", async (req, res) => {
   let statusNum = 200;
   const controller = new TodoListController();
   const response = await controller
@@ -51,7 +51,7 @@ TodoListRouter.get("/fetchuserstodolists", async (req, res) => {
   res.status(statusNum).send(response);
 });
 
-TodoListRouter.get("/fetchtodoliststasks", async (req, res) => {
+TodoListRouter.post("/fetchtodoliststasks", async (req, res) => {
   let statusNum = 200;
   const controller = new TodoListController();
   const response = await controller

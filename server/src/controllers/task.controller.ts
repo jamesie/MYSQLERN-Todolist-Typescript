@@ -46,14 +46,14 @@ export default class TaskController extends Controller {
     return editTask(req, body);
   }
 
-  @Get("/inctasks")
+  @Post("/inctasks")
   public async fetchIncompletedTasks(
     @Request() req: myReq
   ): Promise<TodoList[]> {
     return fetchIncompletedTasks(req);
   }
 
-  @Get("/fetchoverdue")
+  @Post("/fetchoverdue")
   public async fetchOverdueTasks(
     @Request() req: myReq,
     @Body() body: ITaskPayload

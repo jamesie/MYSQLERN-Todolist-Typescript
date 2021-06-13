@@ -15,6 +15,17 @@ UserRouter.post("/register", async (req, res) => {
 });
 
 UserRouter.post("/login", async (req, res) => {
+  console.log(req.body)
+  let statusNum = 200;
+  const controller = new UserController();
+  const response = await controller.login(req, req.body).catch((err: Error) => {
+    statusNum = 404;
+    return err.message;
+  });
+  return res.status(statusNum).send(response);
+});
+
+UserRouter.delete("/delete", async (req, res) => {
   let statusNum = 200;
   const controller = new UserController();
   const response = await controller.login(req, req.body).catch((err: Error) => {
@@ -24,22 +35,19 @@ UserRouter.post("/login", async (req, res) => {
   return res.status(statusNum).send(response);
 });
 
-UserRouter.delete("/delete", async (req, res) => {
-  const controller = new UserController();
-  await controller.deleteAccount(req);
-  const cookieStatus = await cookieLogoutorDeleteHandle(req, res);
-  res.send(cookieStatus);
-});
-
 UserRouter.post("/logout", async (req, res) => {
   const cookieStatus = await cookieLogoutorDeleteHandle(req, res);
   res.send(cookieStatus);
 });
 
 UserRouter.get("/me", async (req, res) => {
+  let statusNum = 200;
   const controller = new UserController();
-  const response = await controller.me(req);
-  res.send(response);
+  const response = await controller.me(req).catch((err: Error) => {
+    statusNum = 404;
+    return err.message;
+  });
+  return res.status(statusNum).send(response);
 });
 
 export default UserRouter;

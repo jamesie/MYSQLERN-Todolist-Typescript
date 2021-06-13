@@ -50,6 +50,6 @@ export default class UserController extends Controller {
 
   @Get("/me")
   public async me(@Request() req: myReq): Promise<User> {
-    return me(req.session.userId);
+    return me(req.session);
   }
 }

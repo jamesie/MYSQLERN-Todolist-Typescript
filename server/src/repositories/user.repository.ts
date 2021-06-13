@@ -47,12 +47,12 @@ export const deleteAccount = async (id: number) => {
     .execute();
 };
 
-export const me = async (id: number | undefined): Promise<User> => {
-  if (!id) throw new Error("Not Logged In");
+export const me = async (session: Session): Promise<User> => {
+  if (!session.id) throw new Error("Not Logged In");
   const user = await getConnection()
     .getRepository(User)
     .createQueryBuilder("user")
-    .where("user.id = :id", { id })
+    .where("user.id = :id", { id: session.id })
     .getOne();
   if (!user) throw new Error("Not Logged In");
   return user;

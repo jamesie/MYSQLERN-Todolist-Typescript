@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-const API_URL = process.env.API_URL
+export const API_URL = process.env.API_URL
 
 export type UserForm = {
   username: string
@@ -16,7 +16,7 @@ export const login = async (loginForm: UserForm) => {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify(loginForm)
-  })
+  }).then(response => response.text()).then(res => JSON.parse(res))
   return res
 }
 
@@ -30,24 +30,26 @@ export const register = async (registerForm: UserForm) => {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify(registerForm)
-  })
+  }).then(response => response.text()).then(res => JSON.parse(res))
   return res
 }
 
 
-export const deleteAccount = async () => {
+export const deleteAccount = async (ctx) => {
   const res = await fetch(API_URL + '/users/delete', {
     method: 'DELETE',
-    credentials: 'same-origin'
+    headers: ctx.req ? { cookie: ctx.req.headers.cookie } : undefined,
+    credentials: 'include'
   })
   return res
 }
 
-export const meQuery = async () => {
+export const meQuery = async (ctx) => {
   const res = await fetch(API_URL + '/users/me', {
+    headers: ctx.req ? { cookie: ctx.req.headers.cookie } : undefined,
     method: 'GET',
-    credentials: 'same-origin'
-  })
+    credentials: 'include'
+  }).then(response => response.text()).then(res => JSON.parse(res))
   return res
 }
 

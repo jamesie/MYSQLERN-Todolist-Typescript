@@ -9,8 +9,8 @@ interface indexProps {
   me: Response;
 }
 
-export const getStaticProps = async () => {
-  const me = JSON.stringify(await meQuery());
+export const getServerSideProps = async (ctx) => {
+  const me = JSON.stringify(await meQuery(ctx));
   return { props: { me } };
 };
 
@@ -36,10 +36,15 @@ const index: FC<indexProps> = ({ me }) => {
       password: password,
     };
     const loginRes = await login(payload);
+    const response = await loginRes.text();
     if (loginRes.status === 404) {
       setTailwindErrorString("border-8 border-red-600");
       setPassword("");
-      setErrorMessage(await loginRes.text());
+      setErrorMessage(response);
+    }
+    console.log(response);
+    if (!response.includes("Incorrect Username or Password")) {
+      router.push("/home");
     }
     // Place your API call here to submit your payload.
   };
@@ -75,7 +80,7 @@ const index: FC<indexProps> = ({ me }) => {
           <BiTask className="w-24 h-24 mx-auto" color="white" />
           <div className="flex flex-col mt-5">
             <h1 className="mx-auto text-4xl font-semibold text-white text-center">
-              Welcome to TodoList-X
+              Welcome to todolist-X
             </h1>
           </div>
           <div className="p-6 mx-auto bg-white rounded-xl shadow-md items-center mt-5 pb-2 mb-5 text-black">
@@ -129,7 +134,10 @@ const index: FC<indexProps> = ({ me }) => {
               <h2 className="text-md font-normal">show password</h2>
             </div>
             <div className="flex">
-              <button className="focus:outline-none focus:ring-3 focus:ring-blue-400 focus:ring-opacity-50 w-11/12 mx-auto bg-blue-500 transition duration-150 ease-in-out hover:bg-blue-600 rounded-md text-white px-8 py-3 text-sm mt-6">
+              <button
+                type="submit"
+                className="focus:outline-none focus:ring-3 focus:ring-blue-400 focus:ring-opacity-50 w-11/12 mx-auto bg-blue-500 transition duration-150 ease-in-out hover:bg-blue-600 rounded-md text-white px-8 py-3 text-sm mt-6"
+              >
                 Login
               </button>
             </div>

@@ -79,7 +79,7 @@ export const fetchUsersTodoLists = async (
   return await result.getMany();
 };
 
-export const fetchTodoListsTaks = async (
+export const fetchTodoListsTasks = async (
   req: myReq,
   body: ITodoListPayload
 ): Promise<Task[]> => {

@@ -1,16 +1,18 @@
 import express from "express";
 import UserController from "../controllers/user.controller";
 import { cookieLogoutorDeleteHandle } from "../utils/destoryCookie";
+import omit from 'just-omit';
 
 const UserRouter = express.Router();
 
 UserRouter.post("/register", async (req, res) => {
   let statusNum = 200;
   const controller = new UserController();
-  const response = await controller.register(req, req.body).catch((err: Error) => {
+  let response = await controller.register(req, req.body).catch((err: Error) => {
     statusNum = 400;
-    return err.message;
+    return { error: err.message};
   });
+  response = omit(response, ['password'])
   return res.status(statusNum).send(response);
 });
 
@@ -18,20 +20,22 @@ UserRouter.post("/login", async (req, res) => {
   console.log(req.body)
   let statusNum = 200;
   const controller = new UserController();
-  const response = await controller.login(req, req.body).catch((err: Error) => {
+  let response = await controller.login(req, req.body).catch((err: Error) => {
     statusNum = 404;
-    return err.message;
+    return { error: err.message};
   });
+  response = omit(response, ['password'])
   return res.status(statusNum).send(response);
 });
 
 UserRouter.delete("/delete", async (req, res) => {
   let statusNum = 200;
   const controller = new UserController();
-  const response = await controller.login(req, req.body).catch((err: Error) => {
+  let response = await controller.login(req, req.body).catch((err: Error) => {
     statusNum = 400;
-    return err.message;
+    return { error: err.message};
   });
+  response = omit(response, ['password'])
   return res.status(statusNum).send(response);
 });
 
@@ -43,10 +47,11 @@ UserRouter.post("/logout", async (req, res) => {
 UserRouter.get("/me", async (req, res) => {
   let statusNum = 200;
   const controller = new UserController();
-  const response = await controller.me(req).catch((err: Error) => {
+  let response = await controller.me(req).catch((err: Error) => {
     statusNum = 404;
-    return err.message;
+    return { error: err.message};
   });
+  response = omit(response, ['password'])
   return res.status(statusNum).send(response);
 });
 

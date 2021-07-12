@@ -12,12 +12,12 @@ export const fetchIncompletedTasks = async (ctx) => {
   return res;
 };
 
-type queryKeyType = [string, { currentDate: string; ctx: any }];
+type overDueTaskQueryKey = [string, { currentDate: string; ctx: any }];
 
 export const fetchOverdueTasks = async ({
   queryKey,
 }: {
-  queryKey: queryKeyType;
+  queryKey: overDueTaskQueryKey;
 }) => {
   const [_key, { currentDate, ctx }] = queryKey;
 

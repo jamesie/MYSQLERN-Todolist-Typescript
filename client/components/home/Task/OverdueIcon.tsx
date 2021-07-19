@@ -4,11 +4,13 @@ import { FiClock } from "react-icons/fi";
 interface OverdueIconProps {
   currentDate: string;
   toBeCompletedBy: string;
+  className?: string;
 }
 
 const OverdueIcon: FC<OverdueIconProps> = ({
   currentDate,
   toBeCompletedBy,
+  className
 }) => {
   const parsedCurrentDate = Date.parse(currentDate);
   const parsedToBeCompletedBy = Date.parse(toBeCompletedBy);
@@ -17,7 +19,6 @@ const OverdueIcon: FC<OverdueIconProps> = ({
   const [tagMessage, setTagMessage] = useState<string>("");
 
   useEffect(() => {
-    console.log(currentDate, toBeCompletedBy)
     if (parsedCurrentDate === parsedToBeCompletedBy){
       setTagColor("bg-yellow-200 text-yellow-700")
       setTagMessage("Due Today")
@@ -32,9 +33,9 @@ const OverdueIcon: FC<OverdueIconProps> = ({
   }, []);
 
   return (
-    <div className={`text-xs flex flex-row font-bold uppercase px-3 py-1 ${tagColor} rounded-full ml-auto`}>
-      <FiClock className='w-4 h-4'/>
-      <div className='ml-2'>
+    <div className={`text-xs flex flex-row font-bold uppercase px-3 py-1 ${tagColor} rounded-full ${className}`}>
+      <FiClock className='w-4 h-4 my-auto'/>
+      <div className='ml-2 my-auto'>
        {tagMessage}
       </div>
     </div>

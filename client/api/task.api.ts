@@ -1,3 +1,5 @@
+import { NextPageContext } from "next";
+import { getTodayDateTime } from "../utils/dateParser";
 import { API_URL } from "./user.api";
 
 export const fetchIncompletedTasks = async (ctx) => {
@@ -12,28 +14,43 @@ export const fetchIncompletedTasks = async (ctx) => {
   return res;
 };
 
-type overDueTaskQueryKey = [string, { currentDate: string; ctx: any }];
+type overDueTaskQueryKey = [string | null, { currentDate: string}];
 
 export const fetchOverdueTasks = async ({
   queryKey,
 }: {
   queryKey: overDueTaskQueryKey;
 }) => {
-  const [_key, { currentDate, ctx }] = queryKey;
+  const [_key, { currentDate }] = queryKey;
+  console.log(currentDate)
 
   const res = await fetch(API_URL + "/task/fetchoverdue", {
     headers: {
-      cookie: ctx?.req ? ctx.req.headers.cookie : null,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
 
     method: "POST",
     credentials: "include",
-    body: JSON.stringify({ currentDate: "2021-00-00T00:00:00.000Z" }),
+    body: JSON.stringify({ currentDate: currentDate }),
   })
     .then((response) => response.text())
     .then((res) => JSON.parse(res));
 
+  return res;
+};
+
+export const changeStatus = async (status: boolean, id: number) => {
+  const res = await fetch(API_URL + "/task/edit", {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    credentials: "include",
+    body: JSON.stringify({status, id}),
+  })
+    .then((response) => response.text())
+    .then((res) => JSON.parse(res));
   return res;
 };

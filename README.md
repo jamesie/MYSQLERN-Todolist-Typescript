@@ -9,5 +9,5 @@ this is the project im currently working on to gain familiarity with working wit
 
 ## UI Images
 - Front page design
-     ![ui exmaple](blob:https://imgur.com/f167a108-7d10-4940-b168-e17adf055587)
+     ![ui exmaple](https://i.imgur.com/IrG0xOb.png)
 
